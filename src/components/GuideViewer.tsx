@@ -10,7 +10,7 @@ interface GuideViewerProps {
 
 export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex flex-col">
       {/* Watermark */}
       <Watermark text="谁人不识张公子" fontSize={18} opacity={0.04} rotate={-25} gap={250} />
       
@@ -30,7 +30,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <article className="bg-white rounded-lg shadow-lg p-8">
           {/* Title */}
           <div className="mb-6 pb-6 border-b border-gray-200">
@@ -60,6 +60,23 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
           />
         </article>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center space-y-2">
+            <p className="text-xs text-gray-400">
+              © 2025 华东导游词在线浏览平台
+            </p>
+            <p className="text-xs text-gray-500 group cursor-default">
+              作者：
+              <span className="text-blue-400 font-medium transition-all duration-300 group-hover:text-blue-300 group-hover:scale-110 inline-block group-hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
+                谁人不识张公子
+              </span>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

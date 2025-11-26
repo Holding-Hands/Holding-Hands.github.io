@@ -93,10 +93,16 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center space-y-2">
             <p className="text-xs text-gray-400">
               © 2025 华东导游词在线浏览平台
+            </p>
+            <p className="text-xs text-gray-500 group cursor-default">
+              作者：
+              <span className="text-blue-400 font-medium transition-all duration-300 group-hover:text-blue-300 group-hover:scale-110 inline-block group-hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
+                谁人不识张公子
+              </span>
             </p>
           </div>
         </div>
