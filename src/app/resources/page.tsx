@@ -74,9 +74,12 @@ export default function ResourcesPage() {
           {resources.map(resource => (
             <div
               key={resource.id}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all overflow-hidden"
+              className="bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden group relative transform hover:-translate-y-2 hover:scale-[1.01] border-2 border-transparent hover:border-blue-400"
             >
-              <div className="p-6">
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-cyan-50/0 group-hover:from-blue-50/30 group-hover:to-cyan-50/30 transition-all duration-300 pointer-events-none" />
+              
+              <div className="p-6 relative z-10">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <svg className="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -86,7 +89,7 @@ export default function ResourcesPage() {
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                   {resource.title}
                 </h3>
                 
@@ -100,14 +103,14 @@ export default function ResourcesPage() {
                       href={resource.externalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition-colors"
+                      className="flex-1 px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
                     >
                       在线阅读
                     </a>
                   ) : (
                     <button
                       onClick={() => setSelectedPdf(resource)}
-                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
                     >
                       在线阅读
                     </button>
@@ -115,7 +118,7 @@ export default function ResourcesPage() {
                   <a
                     href={resource.pdfUrl}
                     download
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all hover:scale-105 hover:border-blue-400"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
