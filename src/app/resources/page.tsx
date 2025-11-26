@@ -10,6 +10,7 @@ interface Resource {
   title: string
   description: string
   fileSize: string
+  category: string
   pdfUrl: string
   externalUrl?: string
 }
@@ -20,17 +21,27 @@ const resources: Resource[] = [
     title: '胡雪岩故居修复研究',
     description: '高念华著 - 北京文物出版社。详细介绍了胡雪岩故居的修复过程和历史研究。',
     fileSize: '163 MB',
-    pdfUrl: '/resources/胡雪岩故居修复研究 -- 高念华著 --北京_文物出版社 .pdf',
+    category: '建筑研究',
+    pdfUrl: '/resources/建筑研究/胡雪岩故居修复研究 -- 高念华著 --北京_文物出版社 .pdf',
     // 由于文件过大，建议使用云存储外部链接
     // externalUrl: 'https://your-cloud-storage.com/huxueyan.pdf'
   },
   // 示例：添加更多资料
   // {
-  //   id: 'example',
-  //   title: '示例资料',
-  //   description: '这是一个示例',
+  //   id: 'example-history',
+  //   title: '示例历史文献',
+  //   description: '历史文献资料示例',
   //   fileSize: '10 MB',
-  //   pdfUrl: '/resources/example.pdf',
+  //   category: '历史文献',
+  //   pdfUrl: '/resources/历史文献/example.pdf',
+  // },
+  // {
+  //   id: 'example-garden',
+  //   title: '示例园林资料',
+  //   description: '园林艺术资料示例',
+  //   fileSize: '15 MB',
+  //   category: '园林艺术',
+  //   pdfUrl: '/resources/园林艺术/example.pdf',
   // },
 ]
 
@@ -95,6 +106,9 @@ export default function ResourcesPage() {
                     </svg>
                     <span className="text-xs text-gray-500 font-medium">{resource.fileSize}</span>
                   </div>
+                  <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full whitespace-nowrap">
+                    {resource.category}
+                  </span>
                 </div>
                 
                 <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">

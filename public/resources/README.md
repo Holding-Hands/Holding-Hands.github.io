@@ -1,18 +1,35 @@
 # PDF 资源文件夹
 
-## 📁 使用说明
+## 📁 文件夹结构
 
-将 PDF 文件放在此目录下，即可在网站上访问。
+```
+resources/
+├── 建筑研究/        # 建筑相关研究资料
+├── 历史文献/        # 历史文献资料
+├── 园林艺术/        # 园林艺术相关资料
+└── 文化专题/        # 文化专题资料
+```
+
+## 📚 分类说明
+
+- **建筑研究**：古建筑修复、建筑历史、建筑艺术等
+- **历史文献**：历史人物、历史事件、历史研究等
+- **园林艺术**：园林设计、园林文化、造园艺术等
+- **文化专题**：佛教文化、民俗文化、地域文化等
 
 ## 🔧 添加 PDF 文件
 
-### 步骤 1: 复制 PDF 文件到此目录
+### 步骤 1: 选择分类并复制文件
 
 ```bash
 # Windows PowerShell
-Copy-Item "D:\path\to\your\file.pdf" "public\resources\huxueyan.pdf"
+# 建筑研究类
+Copy-Item "D:\path\to\your\file.pdf" "public\resources\建筑研究\filename.pdf"
 
-# 或者直接拖拽文件到此文件夹
+# 历史文献类
+Copy-Item "D:\path\to\your\file.pdf" "public\resources\历史文献\filename.pdf"
+
+# 或者直接拖拽文件到对应分类文件夹
 ```
 
 ### 步骤 2: 更新资源列表
@@ -26,7 +43,8 @@ const resources: Resource[] = [
     title: 'PDF 标题',
     description: 'PDF 描述',
     fileSize: '文件大小',
-    pdfUrl: '/resources/filename.pdf', // 文件名要匹配
+    category: '建筑研究', // 选择对应分类
+    pdfUrl: '/resources/建筑研究/filename.pdf', // 包含分类路径
   },
 ]
 ```
