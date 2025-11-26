@@ -24,6 +24,59 @@ body {
   }
 }
 
+/* Watermark */
+.watermark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.watermark::before {
+  content: '谁人不识张公子';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 3rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Multiple watermarks pattern */
+.watermark-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 200px,
+    transparent 200px,
+    transparent 400px
+  );
+}
+
+.watermark-text {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.025);
+  transform: rotate(-45deg);
+  white-space: nowrap;
+  user-select: none;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

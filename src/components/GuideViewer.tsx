@@ -1,6 +1,7 @@
 'use client'
 
 import { Guide } from '@/types/guide'
+import Watermark from './Watermark'
 
 interface GuideViewerProps {
   guide: Guide
@@ -10,6 +11,9 @@ interface GuideViewerProps {
 export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+      {/* Watermark */}
+      <Watermark text="谁人不识张公子" fontSize={18} opacity={0.04} rotate={-25} gap={250} />
+      
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -33,7 +37,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {guide.title}
             </h1>
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+            <div className="flex items-center gap-4 text-sm text-gray-600">
               <span className="px-3 py-1 bg-blue-100 text-blue-700 font-medium rounded-full">
                 {guide.category}
               </span>
@@ -47,9 +51,6 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
                 </span>
               )}
             </div>
-            <p className="text-xs text-blue-600 font-medium">
-              作者：谁人不识张公子
-            </p>
           </div>
 
           {/* Content */}
