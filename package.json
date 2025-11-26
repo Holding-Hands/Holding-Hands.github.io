@@ -1,0 +1,28 @@
+{
+  "name": "guidewords",
+  "version": "1.0.0",
+  "description": "华东导游词在线浏览平台",
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/process-guides.js",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@tailwindcss/typography": "^0.5.10",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.0"
+  }
+}
