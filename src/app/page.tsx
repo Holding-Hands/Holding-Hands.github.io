@@ -42,8 +42,11 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
               华东导游词
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-1">
               探索华东地区的历史文化与自然风光
+            </p>
+            <p className="text-sm text-blue-600 font-medium">
+              作者：谁人不识张公子
             </p>
           </div>
         </div>
@@ -89,10 +92,10 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="text-center">
-            <p className="text-gray-400">
-              © 2025 华东导游词在线浏览平台
+            <p className="text-xs text-gray-400">
+              © 2025 华东导游词在线浏览平台 · 作者：谁人不识张公子
             </p>
           </div>
         </div>
