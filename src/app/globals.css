@@ -188,3 +188,10 @@ body {
   background-color: #374151 !important;
   color: #e5e7eb !important;
 }
+
+/* Print protection */
+@media print {
+  html, body {
+    display: none !important;
+  }
+}
