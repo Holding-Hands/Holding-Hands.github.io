@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import CopyProtection from '@/components/CopyProtection'
 
 export const metadata: Metadata = {
   title: '华东导游词 - 在线浏览平台',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased select-none" onContextMenu={(e) => e.preventDefault()}>
+        <CopyProtection />
+        {children}
+      </body>
     </html>
   )
 }
