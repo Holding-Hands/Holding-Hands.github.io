@@ -55,7 +55,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
 
           {/* Content */}
           <div 
-            className="markdown-content prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300"
+            className="markdown-content prose prose-lg dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: guide.content }}
           />
         </article>
