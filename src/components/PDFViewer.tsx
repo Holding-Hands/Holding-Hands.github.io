@@ -88,19 +88,19 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
       <main className="flex-1 overflow-hidden">
         {isExternalUrl ? (
           <div className="h-full flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center max-w-lg">
-              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/50 p-6 sm:p-8 text-center max-w-lg transition-colors border border-gray-200 dark:border-gray-700">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500 dark:text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">大文件在线预览</h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">大文件在线预览</h3>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4">
                 此文件托管在 GitHub Releases，由于文件较大（155MB），建议下载到本地查看以获得最佳体验。
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <a
                   href={pdfUrl}
                   download
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
+                  className="px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm sm:text-base"
                 >
                   下载 PDF
                 </a>
@@ -108,7 +108,7 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
                   href={pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                  className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm sm:text-base"
                 >
                   新窗口打开
                 </a>
@@ -117,17 +117,17 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
           </div>
         ) : pdfError ? (
           <div className="h-full flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center max-w-md">
-              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/50 p-6 sm:p-8 text-center max-w-md transition-colors border border-gray-200 dark:border-gray-700">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-red-500 dark:text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">无法加载 PDF</h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-4">请尝试下载文件或在新窗口中打开</p>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">无法加载 PDF</h3>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4">请尝试下载文件或在新窗口中打开</p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <a
                   href={pdfUrl}
                   download
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
+                  className="px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm sm:text-base"
                 >
                   下载 PDF
                 </a>
@@ -135,7 +135,7 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
                   href={pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                  className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm sm:text-base"
                 >
                   新窗口打开
                 </a>
