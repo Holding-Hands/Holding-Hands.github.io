@@ -22,22 +22,18 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // 构建完整的 PDF URL（使用 Mozilla PDF.js Viewer）
+  // 判断是否为外部链接
+  const isExternalUrl = pdfUrl.startsWith('http://') || pdfUrl.startsWith('https://')
+  
+  // 构建完整的 PDF URL
   const getViewerUrl = () => {
-    // 判断是否为外部链接（GitHub Releases 等）
-    const isExternalUrl = pdfUrl.startsWith('http://') || pdfUrl.startsWith('https://')
-    
-    if (isExternalUrl) {
-      // 外部链接使用 Mozilla PDF.js 在线预览（支持大文件）
-      return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`
-    }
-    
     if (pdfError || isMobile) {
-      // 移动端或出错时也使用 PDF.js
-      return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(window.location.origin + pdfUrl)}`
+      // 移动端或出错时使用 PDF.js
+      const url = isExternalUrl ? pdfUrl : window.location.origin + pdfUrl
+      return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}`
     }
     
-    // PC 端本地文件使用浏览器内置查看器
+    // PC 端使用浏览器内置查看器
     return pdfUrl
   }
 
@@ -90,7 +86,36 @@ export default function PDFViewer({ pdfUrl, title, onBack }: PDFViewerProps) {
 
       {/* PDF Viewer - Full Screen */}
       <main className="flex-1 overflow-hidden">
-        {pdfError ? (
+        {isExternalUrl ? (
+          <div className="h-full flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center max-w-lg">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">大文件在线预览</h3>
+              <p className="text-sm sm:text-base text-gray-600 mb-4">
+                此文件托管在 GitHub Releases，由于文件较大（155MB），建议下载到本地查看以获得最佳体验。
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <a
+                  href={pdfUrl}
+                  download
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
+                >
+                  下载 PDF
+                </a>
+                <a
+                  href={pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                >
+                  新窗口打开
+                </a>
+              </div>
+            </div>
+          </div>
+        ) : pdfError ? (
           <div className="h-full flex items-center justify-center p-4">
             <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center max-w-md">
               <svg className="w-12 h-12 sm:w-16 sm:h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
