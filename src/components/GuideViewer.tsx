@@ -86,10 +86,16 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
       // 将响应转为 Blob
       const blob = await response.blob()
       
-      // 检查是否是错误响应（VoiceRSS 错误时返回文本）
-      if (blob.type.includes('text')) {
+      console.log('VoiceRSS response:', {
+        type: blob.type,
+        size: blob.size,
+      })
+      
+      // 检查是否是错误响应（VoiceRSS 错误时返回文本，体积很小）
+      if (blob.size < 1000 || blob.type.includes('text')) {
         const errorText = await blob.text()
         console.error('VoiceRSS error:', errorText)
+        alert('语音服务错误: ' + errorText)
         setIsLoading(false)
         return
       }
