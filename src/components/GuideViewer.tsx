@@ -14,26 +14,33 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   const { theme } = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [isSupported, setIsSupported] = useState(false)
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
 
-  // 加载语音列表
+  // 检测支持情况和加载语音
   useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      setIsSupported(true)
+      
+      const loadVoices = () => {
+        const availableVoices = window.speechSynthesis.getVoices()
+        setVoices(availableVoices)
+      }
 
-    loadVoices()
-    window.speechSynthesis.onvoiceschanged = loadVoices
+      loadVoices()
+      // 部分移动端浏览器可能不会触发此事件，所以上面先调用一次
+      window.speechSynthesis.onvoiceschanged = loadVoices
 
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null
+      return () => {
+        window.speechSynthesis.onvoiceschanged = null
+      }
     }
   }, [])
 
   // 停止朗读
   const stopSpeaking = () => {
+    if (!isSupported) return
     window.speechSynthesis.cancel()
     setIsPlaying(false)
     setIsPaused(false)
@@ -41,6 +48,11 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
 
   // 开始/暂停朗读
   const toggleSpeaking = () => {
+    if (!isSupported) {
+      alert('当前浏览器不支持语音朗读，请尝试使用系统自带浏览器（如Safari或Chrome）打开。')
+      return
+    }
+
     if (isPlaying) {
       if (isPaused) {
         window.speechSynthesis.resume()
@@ -61,14 +73,25 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
       if (!text.trim()) return
 
       const utterance = new SpeechSynthesisUtterance(text)
-      // 尝试找到中文语音
-      const zhVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'))
-      if (zhVoice) {
-        utterance.voice = zhVoice
-      }
+      
+      // 优化：优先使用 lang，仅在确定找到了中文语音包时才设置 voice
+      // 这样可以避免在微信等环境中因为设置了错误的 voice 导致不发声
       utterance.lang = 'zh-CN'
+      
+      if (voices.length > 0) {
+        const zhVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'))
+        if (zhVoice) {
+          utterance.voice = zhVoice
+        }
+      }
+
       utterance.rate = 1.0
       
+      utterance.onstart = () => {
+        setIsPlaying(true)
+        setIsPaused(false)
+      }
+
       utterance.onend = () => {
         setIsPlaying(false)
         setIsPaused(false)
@@ -78,11 +101,16 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
         console.error('Speech error:', e)
         setIsPlaying(false)
         setIsPaused(false)
+        // 微信特定的错误提示
+        if (navigator.userAgent.toLowerCase().includes('micromessenger')) {
+           alert('微信内置浏览器可能限制了语音播放，请点击右上角"..."选择"在浏览器打开"体验完整功能。')
+        }
       }
 
-      // iOS Safari 需要在设置好 utterance 后延迟一点点播放，或者直接播放
       utteranceRef.current = utterance
       window.speechSynthesis.speak(utterance)
+      
+      // 立即设置状态，等待 onstart 确认
       setIsPlaying(true)
       setIsPaused(false)
     }
