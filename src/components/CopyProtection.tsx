@@ -47,14 +47,6 @@ export default function CopyProtection() {
         e.preventDefault()
         return false
       }
-      // 禁用 F12 和其他开发者工具快捷键
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c'))
-      ) {
-        e.preventDefault()
-        return false
-      }
     }
 
     document.addEventListener('contextmenu', handleContextMenu)
