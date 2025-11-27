@@ -113,6 +113,14 @@ body {
   @apply text-xl font-semibold mt-4 mb-2 text-gray-700;
 }
 
+.markdown-content h4 {
+  @apply text-lg font-semibold mt-3 mb-2 text-gray-700;
+}
+
+.markdown-content h5 {
+  @apply text-base font-semibold mt-2 mb-1 text-gray-700;
+}
+
 .markdown-content p {
   @apply mb-4 leading-relaxed text-gray-700;
 }
@@ -136,4 +144,47 @@ body {
 
 .markdown-content pre {
   @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+/* Dark mode styles for markdown content */
+.dark .markdown-content h1 {
+  color: #f3f4f6 !important;
+}
+
+.dark .markdown-content h2 {
+  color: #e5e7eb !important;
+}
+
+.dark .markdown-content h3 {
+  color: #d1d5db !important;
+}
+
+.dark .markdown-content h4 {
+  color: #d1d5db !important;
+}
+
+.dark .markdown-content h5 {
+  color: #d1d5db !important;
+}
+
+.dark .markdown-content p {
+  color: #d1d5db !important;
+}
+
+.dark .markdown-content li {
+  color: #d1d5db !important;
+}
+
+.dark .markdown-content strong {
+  color: #f3f4f6 !important;
+}
+
+.dark .markdown-content code {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+.dark .markdown-content pre {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
 }
