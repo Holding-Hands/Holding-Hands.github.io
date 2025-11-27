@@ -138,9 +138,12 @@ function HomePage() {
           </div>
 
           {/* Mobile Menu Dropdown */}
-          {isMobileMenuOpen && (
-            <div className="sm:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-lg z-10 animate-in slide-in-from-top-2 duration-200">
-              <div className="px-4 py-4 grid grid-cols-3 gap-4">
+          <div className={`sm:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-lg z-10 transition-all duration-300 ease-out origin-top ${
+            isMobileMenuOpen 
+              ? 'opacity-100 scale-y-100 translate-y-0' 
+              : 'opacity-0 scale-y-0 -translate-y-2 pointer-events-none'
+          }`}>
+            <div className="px-4 py-4 grid grid-cols-3 gap-4">
                 <button
                   onClick={() => {
                     toggleTheme()
@@ -181,9 +184,8 @@ function HomePage() {
                   </svg>
                   <span className="text-xs font-medium">资料</span>
                 </Link>
-              </div>
             </div>
-          )}
+          </div>
         </div>
       </header>
 
@@ -197,7 +199,7 @@ function HomePage() {
               placeholder="搜索景点名称、描述或位置..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-11 pr-10 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 text-sm sm:text-base"
+              className="w-full px-4 py-3 pl-11 pr-10 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:shadow-[0_0_0_2px_rgba(64,158,255,0.2)] dark:focus:shadow-[0_0_0_2px_rgba(96,165,250,0.3)] transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500 text-sm sm:text-base"
             />
             <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
