@@ -130,7 +130,7 @@ export default function ResourcesPage() {
                   </a>
                   <a
                     href={resource.externalUrl || withBasePath(resource.pdfUrl)}
-                    download
+                    download={resource.title + '.pdf'}
                     className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all hover:scale-105 hover:border-blue-400"
                     title="下载"
                   >
