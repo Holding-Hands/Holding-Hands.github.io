@@ -24,8 +24,7 @@ const resources: Resource[] = [
     fileSize: '163 MB',
     category: '建筑研究',
     pdfUrl: '/resources/建筑研究/胡雪岩故居修复研究 -- 高念华著 --北京_文物出版社 .pdf',
-    // 由于文件过大，建议使用云存储外部链接
-    // externalUrl: 'https://your-cloud-storage.com/huxueyan.pdf'
+    externalUrl: 'https://github.com/Holding-Hands/Holding-Hands.github.io/releases/download/v1.0/huxueyan.pdf'
   },
   // 示例：添加更多资料
   // {
