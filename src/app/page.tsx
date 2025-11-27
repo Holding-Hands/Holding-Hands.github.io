@@ -71,12 +71,12 @@ function HomePage() {
       {/* Header */}
       <header className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-sm dark:shadow-gray-900/50 sticky top-0 z-10 transition-colors duration-300 border-b border-gray-200/50 dark:border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex-1 text-center min-w-0">
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 transition-colors">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-0.5 sm:mb-2 transition-colors truncate">
                 华东导游词
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm transition-colors">
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm transition-colors truncate">
                 探索华东地区的历史文化与自然风光
               </p>
             </div>
