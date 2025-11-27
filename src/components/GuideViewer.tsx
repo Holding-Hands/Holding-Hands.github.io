@@ -5,6 +5,9 @@ import { Guide } from '@/types/guide'
 import Watermark from './Watermark'
 import { useTheme } from '@/contexts/ThemeContext'
 
+// VoiceRSS API Key
+const VOICERSS_API_KEY = '28fef066a3164873802fae9fe37e351c'
+
 interface GuideViewerProps {
   guide: Guide
   onBack: () => void
@@ -14,112 +17,88 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   const { theme } = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
-  const [isSupported, setIsSupported] = useState(false)
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
-
-  // 检测支持情况和加载语音
-  useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      setIsSupported(true)
-      
-      const loadVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices()
-        setVoices(availableVoices)
-      }
-
-      loadVoices()
-      // 部分移动端浏览器可能不会触发此事件，所以上面先调用一次
-      window.speechSynthesis.onvoiceschanged = loadVoices
-
-      return () => {
-        window.speechSynthesis.onvoiceschanged = null
-      }
-    }
-  }, [])
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   // 停止朗读
   const stopSpeaking = () => {
-    if (!isSupported) return
-    window.speechSynthesis.cancel()
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      audioRef.current = null
+    }
     setIsPlaying(false)
     setIsPaused(false)
   }
 
   // 开始/暂停朗读
   const toggleSpeaking = () => {
-    if (!isSupported) {
-      alert('当前浏览器不支持语音朗读，请尝试使用系统自带浏览器（如Safari或Chrome）打开。')
-      return
-    }
-
     if (isPlaying) {
       if (isPaused) {
-        window.speechSynthesis.resume()
+        // 继续播放
+        audioRef.current?.play()
         setIsPaused(false)
       } else {
-        window.speechSynthesis.pause()
+        // 暂停
+        audioRef.current?.pause()
         setIsPaused(true)
       }
     } else {
-      // 关键修复：在移动端，播放前必须先 cancel，否则容易卡死
-      window.speechSynthesis.cancel()
-
-      // 创建新的朗读实例
+      // 提取纯文本
       const tempDiv = document.createElement('div')
       tempDiv.innerHTML = guide.content
-      const text = tempDiv.innerText || tempDiv.textContent || ''
+      let text = tempDiv.innerText || tempDiv.textContent || ''
       
       if (!text.trim()) return
 
-      const utterance = new SpeechSynthesisUtterance(text)
-      
-      // 优化：优先使用 lang，仅在确定找到了中文语音包时才设置 voice
-      // 这样可以避免在微信等环境中因为设置了错误的 voice 导致不发声
-      utterance.lang = 'zh-CN'
-      
-      if (voices.length > 0) {
-        const zhVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'))
-        if (zhVoice) {
-          utterance.voice = zhVoice
-        }
+      // VoiceRSS 有字符限制（免费版约 100KB），如果文本太长需要截断
+      // 为了安全起见，限制在 5000 字符
+      if (text.length > 5000) {
+        text = text.substring(0, 5000) + '...'
       }
 
-      utterance.rate = 1.0
-      
-      utterance.onstart = () => {
+      // 构建 VoiceRSS API URL
+      const encodedText = encodeURIComponent(text)
+      const audioUrl = `https://api.voicerss.org/?key=${VOICERSS_API_KEY}&hl=zh-cn&src=${encodedText}&c=MP3`
+
+      // 创建 Audio 元素
+      const audio = new Audio(audioUrl)
+      audioRef.current = audio
+
+      audio.onplay = () => {
         setIsPlaying(true)
         setIsPaused(false)
       }
 
-      utterance.onend = () => {
+      audio.onended = () => {
         setIsPlaying(false)
         setIsPaused(false)
-      }
-      
-      utterance.onerror = (e) => {
-        console.error('Speech error:', e)
-        setIsPlaying(false)
-        setIsPaused(false)
-        // 微信特定的错误提示
-        if (navigator.userAgent.toLowerCase().includes('micromessenger')) {
-           alert('微信内置浏览器可能限制了语音播放，请点击右上角"..."选择"在浏览器打开"体验完整功能。')
-        }
+        audioRef.current = null
       }
 
-      utteranceRef.current = utterance
-      window.speechSynthesis.speak(utterance)
-      
-      // 立即设置状态，等待 onstart 确认
+      audio.onerror = (e) => {
+        console.error('Audio error:', e)
+        setIsPlaying(false)
+        setIsPaused(false)
+        audioRef.current = null
+      }
+
+      // 开始播放
+      audio.play().catch(err => {
+        console.error('Play failed:', err)
+        setIsPlaying(false)
+      })
+
       setIsPlaying(true)
-      setIsPaused(false)
     }
   }
 
-  // 组件卸载时停止朗读
+  // 组件卸载时停止播放
   useEffect(() => {
     return () => {
-      window.speechSynthesis.cancel()
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
     }
   }, [])
 
