@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import logo from '@/imgs/logo.png'
 import { guideData } from '@/data/guides'
 import CategoryNav from '@/components/CategoryNav'
 import GuideCard from '@/components/GuideCard'
@@ -78,8 +77,10 @@ function HomePage() {
             {/* Logo + Title Section */}
             <div className="flex-1 flex items-center justify-start sm:justify-center min-w-0 mr-10 sm:mr-0 gap-2 sm:gap-3">
               <Image 
-                src={logo} 
+                src="/logo.png" 
                 alt="Logo" 
+                width={40}
+                height={40}
                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-contain flex-shrink-0"
                 priority
               />
