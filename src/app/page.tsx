@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import logo from '@/imgs/logo.png'
 import { guideData } from '@/data/guides'
 import CategoryNav from '@/components/CategoryNav'
 import GuideCard from '@/components/GuideCard'
@@ -73,14 +75,22 @@ function HomePage() {
       <header className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-sm dark:shadow-gray-900/50 sticky top-0 z-10 transition-colors duration-300 border-b border-gray-200/50 dark:border-gray-700/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex items-center justify-between min-h-[44px]">
-            {/* Title Section - Centered on Desktop, Left on Mobile */}
-            <div className="flex-1 text-left sm:text-center min-w-0 mr-10 sm:mr-0">
-              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-0.5 sm:mb-2 transition-colors truncate">
-                华东导游词
-              </h1>
+            {/* Logo + Title Section */}
+            <div className="flex-1 flex items-center justify-start sm:justify-center min-w-0 mr-10 sm:mr-0 gap-2 sm:gap-3">
+              <Image 
+                src={logo} 
+                alt="Logo" 
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-contain flex-shrink-0"
+                priority
+              />
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-0 sm:mb-0.5 transition-colors truncate">
+                  华东导游词
+                </h1>
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm transition-colors truncate">
                 探索华东地区的历史文化与自然风光
               </p>
+              </div>
             </div>
 
             {/* Desktop Buttons - Absolute Right */}
