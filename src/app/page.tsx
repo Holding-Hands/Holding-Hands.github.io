@@ -227,7 +227,7 @@ function HomePage() {
         <div className="mt-10">
           <div className="mb-6 flex items-baseline justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1">
                 {selectedCategory === '全部' ? '全部导游词' : selectedCategory}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
