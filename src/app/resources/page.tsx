@@ -51,7 +51,7 @@ export default function ResourcesPage() {
   if (selectedPdf) {
     return (
       <PDFViewer
-        pdfUrl={withBasePath(selectedPdf.pdfUrl)}
+        pdfUrl={selectedPdf.externalUrl || withBasePath(selectedPdf.pdfUrl)}
         title={selectedPdf.title}
         onBack={() => setSelectedPdf(null)}
       />
@@ -120,14 +120,12 @@ export default function ResourcesPage() {
                 </p>
                 
                 <div className="flex gap-2">
-                  <a
-                    href={resource.externalUrl || withBasePath(resource.pdfUrl)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
+                  <button
+                    onClick={() => setSelectedPdf(resource)}
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
                   >
                     在线阅读
-                  </a>
+                  </button>
                   <a
                     href={resource.externalUrl || withBasePath(resource.pdfUrl)}
                     download={resource.title + '.pdf'}
