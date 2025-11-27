@@ -46,7 +46,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }
 
   if (!mounted) {
-    return null
+    // SSR 时使用默认 light 主题渲染，避免静态生成超时
+    return (
+      <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {} }}>
+        {children}
+      </ThemeContext.Provider>
+    )
   }
 
   return (
