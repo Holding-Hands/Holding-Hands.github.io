@@ -102,15 +102,15 @@ body {
 }
 
 .markdown-content h1 {
-  @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  @apply text-xl sm:text-2xl font-bold mt-6 mb-3 text-gray-900;
 }
 
 .markdown-content h2 {
-  @apply text-2xl font-bold mt-6 mb-3 text-gray-800;
+  @apply text-lg sm:text-xl font-bold mt-5 mb-2 text-gray-800;
 }
 
 .markdown-content h3 {
-  @apply text-xl font-semibold mt-4 mb-2 text-gray-700;
+  @apply text-base sm:text-lg font-semibold mt-4 mb-2 text-gray-700;
 }
 
 .markdown-content h4 {

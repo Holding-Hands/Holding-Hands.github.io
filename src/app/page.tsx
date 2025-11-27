@@ -293,7 +293,7 @@ function HomePage() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowSettings(false)}>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6 transition-colors" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">设置</h2>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">设置</h2>
               <button
                 onClick={() => setShowSettings(false)}
                 className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
