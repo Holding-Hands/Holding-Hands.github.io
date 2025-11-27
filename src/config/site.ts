@@ -1,7 +1,7 @@
 // 网站配置
 export const siteConfig = {
-  // GitHub Pages basePath
-  basePath: process.env.NODE_ENV === 'production' ? '/GuideWords.github.io' : '',
+  // GitHub Pages basePath - 用户站点不需要 basePath
+  basePath: '',
   
   // 网站信息
   title: '华东导游词',

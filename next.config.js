@@ -4,8 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/GuideWords.github.io',
-  assetPrefix: '/GuideWords.github.io/',
   trailingSlash: true,
 }
 
