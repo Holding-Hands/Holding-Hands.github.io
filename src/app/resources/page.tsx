@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import PDFViewer from '@/components/PDFViewer'
 import MarkdownViewer from '@/components/MarkdownViewer'
+import DocViewer from '@/components/DocViewer'
 import Watermark from '@/components/Watermark'
 import { withBasePath } from '@/config/site'
 import { ThemeProvider } from '@/contexts/ThemeContext'
@@ -13,6 +14,7 @@ function ResourcesPageContent() {
   const [selectedPdf, setSelectedPdf] = useState<Resource | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('全部')
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('全部')
+  const [selectedThirdCategory, setSelectedThirdCategory] = useState<string>('全部')
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   // 获取所有主分类
@@ -36,10 +38,30 @@ function ResourcesPageContent() {
     return Array.from(subCats)
   }, [selectedCategory])
 
-  // 当主分类改变时，重置子分类
+  // 获取当前子分类下的三级分类
+  const thirdCategories = useMemo(() => {
+    if (selectedCategory === '全部' || selectedSubCategory === '全部') return ['全部']
+    const thirdCats = new Set<string>(['全部'])
+    resources
+      .filter(r => r.category === selectedCategory && r.subCategory === selectedSubCategory)
+      .forEach(resource => {
+        if (resource.thirdCategory) {
+          thirdCats.add(resource.thirdCategory)
+        }
+      })
+    return Array.from(thirdCats)
+  }, [selectedCategory, selectedSubCategory])
+
+  // 当主分类改变时，重置子分类和三级分类
   useMemo(() => {
     setSelectedSubCategory('全部')
+    setSelectedThirdCategory('全部')
   }, [selectedCategory])
+
+  // 当子分类改变时，重置三级分类
+  useMemo(() => {
+    setSelectedThirdCategory('全部')
+  }, [selectedSubCategory])
 
   // 筛选资源
   const filteredResources = useMemo(() => {
@@ -55,6 +77,11 @@ function ResourcesPageContent() {
       filtered = filtered.filter(r => r.subCategory === selectedSubCategory)
     }
 
+    // 按三级分类筛选
+    if (selectedThirdCategory !== '全部') {
+      filtered = filtered.filter(r => r.thirdCategory === selectedThirdCategory)
+    }
+
     // 按搜索关键词筛选
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
@@ -62,19 +89,22 @@ function ResourcesPageContent() {
         r.title.toLowerCase().includes(query) ||
         r.description.toLowerCase().includes(query) ||
         r.category.toLowerCase().includes(query) ||
-        (r.subCategory && r.subCategory.toLowerCase().includes(query))
+        (r.subCategory && r.subCategory.toLowerCase().includes(query)) ||
+        (r.thirdCategory && r.thirdCategory.toLowerCase().includes(query))
       )
     }
 
     return filtered
-  }, [selectedCategory, selectedSubCategory, searchQuery])
+  }, [selectedCategory, selectedSubCategory, selectedThirdCategory, searchQuery])
 
-  // 按子分类分组资源
+  // 按子分类或三级分类分组资源
   const groupedResources = useMemo(() => {
+    // 如果选择了具体的子分类或三级分类，不分组
     if (selectedCategory === '全部' || selectedSubCategory !== '全部') {
       return { '全部': filteredResources }
     }
 
+    // 按子分类分组
     const grouped: Record<string, Resource[]> = {}
     filteredResources.forEach(resource => {
       const subCat = resource.subCategory || '其他'
@@ -89,11 +119,22 @@ function ResourcesPageContent() {
   if (selectedPdf) {
     const fileUrl = selectedPdf.externalUrl || withBasePath(selectedPdf.pdfUrl)
     const isMd = selectedPdf.pdfUrl.endsWith('.md')
+    const isDoc = selectedPdf.pdfUrl.endsWith('.docx') || selectedPdf.pdfUrl.endsWith('.doc')
     
     if (isMd) {
       return (
         <MarkdownViewer
           mdUrl={fileUrl}
+          title={selectedPdf.title}
+          onBack={() => setSelectedPdf(null)}
+        />
+      )
+    }
+    
+    if (isDoc) {
+      return (
+        <DocViewer
+          docUrl={fileUrl}
           title={selectedPdf.title}
           onBack={() => setSelectedPdf(null)}
         />
@@ -192,7 +233,7 @@ function ResourcesPageContent() {
 
         {/* Sub Category Filter */}
         {subCategories.length > 1 && (
-          <div className="mb-8 overflow-x-auto">
+          <div className="mb-4 overflow-x-auto">
             <div className="flex gap-2 min-w-max pb-2">
               {subCategories.map(subCategory => (
                 <button
@@ -208,6 +249,32 @@ function ResourcesPageContent() {
                   {subCategory !== '全部' && (
                     <span className="ml-1.5 text-xs opacity-75">
                       ({resources.filter(r => r.category === selectedCategory && r.subCategory === subCategory).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Third Category Filter */}
+        {thirdCategories.length > 1 && (
+          <div className="mb-8 overflow-x-auto">
+            <div className="flex gap-2 min-w-max pb-2">
+              {thirdCategories.map(thirdCategory => (
+                <button
+                  key={thirdCategory}
+                  onClick={() => setSelectedThirdCategory(thirdCategory)}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
+                    selectedThirdCategory === thirdCategory
+                      ? 'bg-green-600 text-white shadow-md'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  {thirdCategory}
+                  {thirdCategory !== '全部' && (
+                    <span className="ml-1.5 text-xs opacity-75">
+                      ({resources.filter(r => r.category === selectedCategory && r.subCategory === selectedSubCategory && r.thirdCategory === thirdCategory).length})
                     </span>
                   )}
                 </button>
