@@ -8,6 +8,35 @@ interface MarkdownViewerProps {
   onBack: () => void
 }
 
+// 简单的Markdown解析函数
+function parseMarkdown(markdown: string): string {
+  let html = markdown
+  
+  // 处理标题
+  html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>')
+  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>')
+  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>')
+  
+  // 处理链接 [文字](URL)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+  
+  // 处理加粗 **文字**
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  
+  // 处理斜体 *文字*
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>')
+  
+  // 处理段落
+  html = html.split('\n\n').map(para => {
+    if (para.trim() === '') return ''
+    if (para.startsWith('<h')) return para
+    return `<p>${para.replace(/\n/g, '<br>')}</p>`
+  }).join('\n')
+  
+  return html
+}
+
 export default function MarkdownViewer({ mdUrl, title, onBack }: MarkdownViewerProps) {
   const [content, setContent] = useState<string>('')
   const [loading, setLoading] = useState(true)
@@ -102,53 +131,20 @@ export default function MarkdownViewer({ mdUrl, title, onBack }: MarkdownViewerP
         )}
 
         {!loading && !error && (
-          <article className="prose prose-slate dark:prose-invert max-w-none
+          <article 
+            className="prose prose-slate dark:prose-invert max-w-none
             prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
             prose-h1:text-3xl prose-h1:mb-4
             prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
             prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
             prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
             prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
+            prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
             prose-ul:my-4 prose-ol:my-4
             prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-li:my-1
             bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 border border-gray-200 dark:border-gray-700"
-          >
-            {content.split('\n').map((line, index) => {
-              // 处理标题
-              if (line.startsWith('# ')) {
-                return <h1 key={index}>{line.substring(2)}</h1>
-              }
-              if (line.startsWith('## ')) {
-                return <h2 key={index}>{line.substring(3)}</h2>
-              }
-              if (line.startsWith('### ')) {
-                return <h3 key={index}>{line.substring(4)}</h3>
-              }
-              if (line.startsWith('#### ')) {
-                return <h4 key={index}>{line.substring(5)}</h4>
-              }
-              
-              // 处理加粗
-              if (line.includes('**')) {
-                const parts = line.split('**')
-                return (
-                  <p key={index}>
-                    {parts.map((part, i) => 
-                      i % 2 === 0 ? part : <strong key={i}>{part}</strong>
-                    )}
-                  </p>
-                )
-              }
-              
-              // 空行
-              if (line.trim() === '') {
-                return <br key={index} />
-              }
-              
-              // 普通段落
-              return <p key={index}>{line}</p>
-            })}
-          </article>
+            dangerouslySetInnerHTML={{ __html: parseMarkdown(content) }}
+          />
         )}
       </div>
     </div>
