@@ -515,7 +515,7 @@ export const resources: Resource[] = [
     fileSize: '14 MB',
     category: '技术书籍',
     subCategory: '前端开发',
-    pdfUrl: '/resources/技术书籍/JavaScript高级程序设计第4版.pdf',
+    pdfUrl: '/resources/技术书籍/javascript-advanced-4th.pdf',
   },
   {
     id: 'vuejs-design',
@@ -524,7 +524,7 @@ export const resources: Resource[] = [
     fileSize: '19 MB',
     category: '技术书籍',
     subCategory: '前端开发',
-    pdfUrl: '/resources/技术书籍/Vue.js设计与实现.pdf',
+    pdfUrl: '/resources/技术书籍/vuejs-design.pdf',
   },
   {
     id: 'css-core',
@@ -533,7 +533,7 @@ export const resources: Resource[] = [
     fileSize: '3 MB',
     category: '技术书籍',
     subCategory: '前端开发',
-    pdfUrl: '/resources/技术书籍/《CSS核心技术详解》.pdf',
+    pdfUrl: '/resources/技术书籍/css-core.pdf',
   },
   {
     id: 'code-complete',
@@ -542,6 +542,6 @@ export const resources: Resource[] = [
     fileSize: '10 MB',
     category: '技术书籍',
     subCategory: '软件工程',
-    pdfUrl: '/resources/技术书籍/代码大全.pdf',
+    pdfUrl: '/resources/技术书籍/code-complete.pdf',
   },
 ]
