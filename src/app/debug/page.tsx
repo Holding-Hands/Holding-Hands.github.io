@@ -10,9 +10,20 @@ function DebugPageContent() {
   const [showSystemInfo, setShowSystemInfo] = useState(false)
 
   useEffect(() => {
-    // 检查 localStorage 中的设置
+    // 检查 localStorage 中的设置，默认关闭
     const saved = localStorage.getItem('vconsole-enabled')
-    if (saved === 'true') {
+    
+    // 如果没有设置或设置为 false，确保关闭
+    if (saved !== 'true') {
+      setVConsoleEnabled(false)
+      localStorage.setItem('vconsole-enabled', 'false')
+      // 如果有旧的 vConsole 实例，销毁它
+      if (vConsole) {
+        vConsole.destroy()
+        setVConsole(null)
+      }
+    } else {
+      // 只有明确设置为 'true' 时才开启
       setVConsoleEnabled(true)
       loadVConsole()
     }

@@ -16,6 +16,7 @@ function HomePage() {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [showSettings, setShowSettings] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+  const [scrollPosition, setScrollPosition] = useState<number>(0)
 
   const categories = useMemo(() => {
     const cats = new Set<string>(['全部'])
@@ -59,7 +60,16 @@ function HomePage() {
     return (
       <GuideViewer
         guide={guide!}
-        onBack={() => setSelectedGuide(null)}
+        onBack={() => {
+          setSelectedGuide(null)
+          // 恢复滚动位置
+          setTimeout(() => {
+            window.scrollTo({
+              top: scrollPosition,
+              behavior: 'smooth'
+            })
+          }, 0)
+        }}
       />
     )
   }
@@ -256,7 +266,10 @@ function HomePage() {
               <GuideCard
                 key={guide.id}
                 guide={guide}
-                onClick={() => setSelectedGuide(guide.id)}
+                onClick={() => {
+                  setScrollPosition(window.scrollY)
+                  setSelectedGuide(guide.id)
+                }}
               />
             ))}
           </div>

@@ -16,6 +16,7 @@ function ResourcesPageContent() {
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('全部')
   const [selectedThirdCategory, setSelectedThirdCategory] = useState<string>('全部')
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const [scrollPosition, setScrollPosition] = useState<number>(0)
 
   // 获取所有主分类
   const categories = useMemo(() => {
@@ -116,6 +117,24 @@ function ResourcesPageContent() {
     return grouped
   }, [filteredResources, selectedCategory, selectedSubCategory])
 
+  // 保存滚动位置
+  const handleOpenPdf = (resource: Resource) => {
+    setScrollPosition(window.scrollY)
+    setSelectedPdf(resource)
+  }
+
+  // 恢复滚动位置
+  const handleBack = () => {
+    setSelectedPdf(null)
+    // 使用 setTimeout 确保 DOM 更新后再滚动
+    setTimeout(() => {
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+      })
+    }, 0)
+  }
+
   if (selectedPdf) {
     const fileUrl = selectedPdf.externalUrl || withBasePath(selectedPdf.pdfUrl)
     const isMd = selectedPdf.pdfUrl.endsWith('.md')
@@ -126,7 +145,7 @@ function ResourcesPageContent() {
         <MarkdownViewer
           mdUrl={fileUrl}
           title={selectedPdf.title}
-          onBack={() => setSelectedPdf(null)}
+          onBack={handleBack}
         />
       )
     }
@@ -136,7 +155,7 @@ function ResourcesPageContent() {
         <DocViewer
           docUrl={fileUrl}
           title={selectedPdf.title}
-          onBack={() => setSelectedPdf(null)}
+          onBack={handleBack}
         />
       )
     }
@@ -145,7 +164,7 @@ function ResourcesPageContent() {
       <PDFViewer
         pdfUrl={fileUrl}
         title={selectedPdf.title}
-        onBack={() => setSelectedPdf(null)}
+        onBack={handleBack}
       />
     )
   }
@@ -350,7 +369,7 @@ function ResourcesPageContent() {
                 
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setSelectedPdf(resource)}
+                    onClick={() => handleOpenPdf(resource)}
                     className="flex-1 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 hover:shadow-lg"
                   >
                     在线阅读
