@@ -4,7 +4,7 @@ import { Guide } from '@/types/guide'
 export const guideData: Guide[] = [
   {
     "id": "chenghuangge",
-    "fileName": "guides/杭州景点/城隍阁.md",
+    "fileName": "public/guides/杭州景点/城隍阁.md",
     "title": "城隍阁",
     "category": "杭州景点",
     "location": "杭州",
@@ -13,7 +13,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "leifengta",
-    "fileName": "guides/杭州景点/雷峰塔.md",
+    "fileName": "public/guides/杭州景点/雷峰塔.md",
     "title": "雷峰塔",
     "category": "杭州景点",
     "location": "杭州",
@@ -22,7 +22,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "feilaifeng",
-    "fileName": "guides/杭州景点/飞来峰.md",
+    "fileName": "public/guides/杭州景点/飞来峰.md",
     "title": "飞来峰",
     "category": "杭州景点",
     "location": "杭州",
@@ -31,7 +31,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "huxueyanguju",
-    "fileName": "guides/杭州景点/胡雪岩故居.md",
+    "fileName": "public/guides/杭州景点/胡雪岩故居.md",
     "title": "胡雪岩故居",
     "category": "杭州景点",
     "location": "杭州",
@@ -40,7 +40,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "zhuozhengyuan",
-    "fileName": "guides/苏州园林/拙政园.md",
+    "fileName": "public/guides/苏州园林/拙政园.md",
     "title": "拙政园",
     "category": "苏州园林",
     "location": "苏州",
@@ -49,7 +49,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "shizilin",
-    "fileName": "guides/苏州园林/狮子林.md",
+    "fileName": "public/guides/苏州园林/狮子林.md",
     "title": "狮子林",
     "category": "苏州园林",
     "location": "苏州",
@@ -58,7 +58,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "xiaolianzhuan",
-    "fileName": "guides/湖州景点/小莲庄.md",
+    "fileName": "public/guides/湖州景点/小莲庄.md",
     "title": "小莲庄",
     "category": "湖州景点",
     "location": "湖州",
@@ -67,7 +67,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "zhangshimingjiuzhai",
-    "fileName": "guides/湖州景点/张石铭旧宅.md",
+    "fileName": "public/guides/湖州景点/张石铭旧宅.md",
     "title": "张石铭旧宅",
     "category": "湖州景点",
     "location": "湖州",
@@ -76,7 +76,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "yuefei",
-    "fileName": "guides/历史人物/岳飞.md",
+    "fileName": "public/guides/历史人物/岳飞.md",
     "title": "岳飞",
     "category": "历史人物",
     "location": "杭州",
@@ -85,7 +85,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "sushi",
-    "fileName": "guides/历史人物/苏轼的一生.md",
+    "fileName": "public/guides/历史人物/苏轼的一生.md",
     "title": "苏轼的一生",
     "category": "历史人物",
     "location": "杭州",
@@ -94,7 +94,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "songhuizong",
-    "fileName": "guides/历史人物/宋徽宗的一生.md",
+    "fileName": "public/guides/历史人物/宋徽宗的一生.md",
     "title": "宋徽宗的一生",
     "category": "历史人物",
     "location": "杭州",
@@ -103,7 +103,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "zhangjingjiang",
-    "fileName": "guides/历史人物/张静江的一生.md",
+    "fileName": "public/guides/历史人物/张静江的一生.md",
     "title": "张静江的一生",
     "category": "历史人物",
     "location": "湖州",
@@ -112,7 +112,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "beishangbeishang",
-    "fileName": "guides/文化专题/北上北上.md",
+    "fileName": "public/guides/文化专题/北上北上.md",
     "title": "北上北上",
     "category": "文化专题",
     "location": "华东",
@@ -121,7 +121,7 @@ export const guideData: Guide[] = [
   },
   {
     "id": "fojiao",
-    "fileName": "guides/文化专题/佛教知识.md",
+    "fileName": "public/guides/文化专题/佛教知识.md",
     "title": "佛教知识",
     "category": "文化专题",
     "location": "杭州",
