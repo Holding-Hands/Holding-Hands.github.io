@@ -164,6 +164,7 @@ function ResourcesPageContent() {
       <PDFViewer
         pdfUrl={fileUrl}
         title={selectedPdf.title}
+        fileSize={selectedPdf.fileSize}
         onBack={handleBack}
       />
     )
