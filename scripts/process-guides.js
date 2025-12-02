@@ -22,6 +22,7 @@ const guides = [
   { id: 'sushi', fileName: 'public/guides/历史人物/苏轼的一生.md', title: '苏轼的一生', category: '历史人物', location: '杭州', description: '北宋文学家苏轼的传奇人生，诗词书画无所不精的文化巨匠。' },
   { id: 'songhuizong', fileName: 'public/guides/历史人物/宋徽宗的一生.md', title: '宋徽宗的一生', category: '历史人物', location: '杭州', description: '北宋末代皇帝宋徽宗赵佶的生平，艺术造诣极高却治国无方的悲剧帝王。' },
   { id: 'zhangjingjiang', fileName: 'public/guides/历史人物/张静江的一生.md', title: '张静江的一生', category: '历史人物', location: '湖州', description: '民国时期著名政治家、实业家张静江的传奇人生。' },
+  { id: 'fangzhimin', fileName: 'public/guides/历史人物/方志敏的一生.md', title: '方志敏的一生', category: '历史人物', location: '江西', description: '伟大的无产阶级革命家、军事家，闽浙赣革命根据地和红十军的创建人，用生命诠释清贫的真谛。' },
   { id: 'beishangbeishang', fileName: 'public/guides/文化专题/北上北上.md', title: '北上北上', category: '文化专题', location: '华东', description: '探索华东地区的历史文化脉络和地域特色。' },
   { id: 'fojiao', fileName: 'public/guides/文化专题/佛教知识.md', title: '佛教知识', category: '文化专题', location: '杭州', description: '佛教文化基础知识，了解佛教在江南地区的传播与影响。' },
 ];
