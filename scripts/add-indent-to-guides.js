@@ -53,8 +53,8 @@ function processMarkdownFile(filePath) {
       const prevLine = i > 0 ? lines[i - 1].trim() : ''
       const isNewParagraph = prevLine === '' || prevLine.startsWith('#')
       
-      if (isNewParagraph && trimmedLine.length > 0 && !line.startsWith('  ')) {
-        newLines.push('  ' + trimmedLine)
+      if (isNewParagraph && trimmedLine.length > 0 && !line.startsWith('　')) {
+        newLines.push('　　' + trimmedLine)  // 使用两个全角空格（中文空格）
         modified = true
       } else {
         newLines.push(line)
