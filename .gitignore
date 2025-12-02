@@ -5,12 +5,15 @@ node_modules/
 
 # Large files (keep in .gitignore, too large for GitHub)
 资料/
-# 忽略超大文件（>20MB，GitHub 推送限制）
+# 忽略超大文件（>25MB，GitHub 推送限制）
 public/resources/建筑研究/*.pdf
 public/resources/考纲/浙江（上）.pdf
 public/resources/考纲/浙江（下）.pdf
-public/resources/押题卷/雷大大/雷大大押题卷3*.pdf
-public/resources/押题卷/雷大大/雷大大押题卷4*.pdf
+public/resources/押题卷/雷大大/雷大大押题卷3科一科二*.pdf
+public/resources/押题卷/雷大大/雷大大押题卷4科一科二*.pdf
+# 允许小于25MB的文件
+!public/resources/押题卷/雷大大/雷大大押题卷3科三科四题目.pdf
+!public/resources/押题卷/雷大大/雷大大押题卷4科三科四题目.pdf
 
 # Testing
 /coverage
