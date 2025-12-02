@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next'
 import { resources } from '@/data/resources'
-import { guideData } from '@/data/guides'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://holding-hands.github.io'
