@@ -418,7 +418,7 @@ assetPrefix: '/your-repo-name/',
 
 如有问题或建议，请通过以下方式联系：
 
-- 提交 [Issue](https://github.com/YOUR_USERNAME/GuideWords/issues)
+- 提交 [Issue](https://github.com/Holding-Hands/GuideWords/issues)
 - 作者：谁人不识张公子
 
 ## 🙏 致谢
