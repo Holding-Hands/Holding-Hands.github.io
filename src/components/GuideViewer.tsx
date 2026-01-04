@@ -5,6 +5,7 @@ import { Guide } from '@/types/guide'
 import Watermark from './Watermark'
 import { useTheme } from '@/contexts/ThemeContext'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 // VoiceRSS API Key（备用方案）
 const VOICERSS_API_KEY = '28fef066a3164873802fae9fe37e351c'
@@ -38,7 +39,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   const [progress, setProgress] = useState({ current: 0, total: 0 }) // 播放进度
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
-  
+
   // 分段播放相关 refs
   const chunksRef = useRef<string[]>([])
   const currentChunkRef = useRef<number>(0)
@@ -68,7 +69,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
         setIsLoadingContent(false)
       }
     }
-    
+
     loadMarkdown()
   }, [guide.fileName])
 
@@ -90,7 +91,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
   const stopSpeaking = () => {
     // 标记停止
     isStoppedRef.current = true
-    
+
     // 停止原生 API
     if (ttsMode === 'native' && window.speechSynthesis) {
       window.speechSynthesis.cancel()
@@ -107,12 +108,12 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     })
     preloadedAudiosRef.current.clear()
     loadingPromisesRef.current.clear()
-    
+
     // 重置分段状态
     chunksRef.current = []
     currentChunkRef.current = 0
     setProgress({ current: 0, total: 0 })
-    
+
     setIsPlaying(false)
     setIsPaused(false)
     setIsLoading(false)
@@ -158,7 +159,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     const chunks: string[] = []
     // 按句子分割
     const sentences = text.split(/(?<=[。！？.!?\n])/g).filter(s => s.trim())
-    
+
     let currentChunk = ''
     for (const sentence of sentences) {
       if (currentChunk.length + sentence.length > chunkSize && currentChunk) {
@@ -171,7 +172,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     if (currentChunk.trim()) {
       chunks.push(currentChunk.trim())
     }
-    
+
     return chunks.length > 0 ? chunks : [text.substring(0, chunkSize)]
   }
 
@@ -245,7 +246,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
 
     // 获取音频（优先用预加载的）
     let audio: HTMLAudioElement | null | undefined = preloadedAudiosRef.current.get(currentIndex)
-    
+
     if (!audio) {
       // 等待正在加载的
       const loadingPromise = loadingPromisesRef.current.get(currentIndex)
@@ -260,7 +261,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
         setIsLoading(false)
       }
     }
-    
+
     preloadedAudiosRef.current.delete(currentIndex)
 
     if (!audio || isStoppedRef.current) {
@@ -269,12 +270,12 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     }
 
     audioRef.current = audio
-    
+
     audio.onplay = () => {
       setIsPlaying(true)
       setIsPaused(false)
       setIsLoading(false)
-      
+
       // 开始播放后立即预加载后面 2 段
       preloadChunk(currentIndex + 1)
       preloadChunk(currentIndex + 2)
@@ -300,7 +301,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     isStoppedRef.current = false
     preloadedAudiosRef.current.clear()
     loadingPromisesRef.current.clear()
-    
+
     // 分段（更小的段落更快响应）
     const chunks = splitTextToChunks(text, 200)
     chunksRef.current = chunks
@@ -383,7 +384,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col transition-colors duration-300">
       {/* Watermark */}
       <Watermark text="谁人不识张公子" fontSize={18} opacity={theme === 'dark' ? 0.08 : 0.04} rotate={-25} gap={250} />
-      
+
       {/* Header */}
       <header className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-sm dark:shadow-gray-900/50 sticky top-0 z-10 transition-colors duration-300 border-b border-gray-200/50 dark:border-gray-700/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -403,13 +404,12 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
               <button
                 onClick={toggleSpeaking}
                 disabled={isLoading}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium ${
-                  isLoading
-                    ? 'bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-wait'
-                    : isPlaying && !isPaused
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium ${isLoading
+                  ? 'bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-wait'
+                  : isPlaying && !isPaused
                     ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
                     : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
+                  }`}
                 title={isLoading ? '加载中...' : isPlaying ? (isPaused ? '继续朗读' : '暂停朗读') : '开始朗读'}
               >
                 {isLoading ? (
@@ -436,7 +436,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
                   </>
                 )}
               </button>
-              
+
               {isPlaying && (
                 <button
                   onClick={stopSpeaking}
@@ -449,7 +449,7 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
                   </svg>
                 </button>
               )}
-              
+
               {/* 进度显示 */}
               {progress.total > 0 && (
                 <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
@@ -458,11 +458,11 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
               )}
             </div>
           </div>
-          
+
           {/* 进度条 */}
           {progress.total > 0 && (
             <div className="mt-2 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-blue-500 transition-all duration-300 ease-out"
                 style={{ width: `${(progress.current / progress.total) * 100}%` }}
               />
@@ -497,7 +497,16 @@ export default function GuideViewer({ guide, onBack }: GuideViewerProps) {
 
           {/* Content */}
           <div className="markdown-content prose prose-lg dark:prose-invert max-w-none">
-            <ReactMarkdown>{markdown}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                a: ({ node, ...props }) => (
+                  <a target="_blank" rel="noopener noreferrer" {...props} />
+                )
+              }}
+            >
+              {markdown}
+            </ReactMarkdown>
           </div>
         </article>
       </main>
